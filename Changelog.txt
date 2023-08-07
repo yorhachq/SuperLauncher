@@ -1,0 +1,33 @@
+﻿
+Changelog:
+
+Version 1.2 - 2023/08/06
+
+Improvements:
+- Changelog 将不再以纯英文书写
+- 指定控制台的输出编码为UTF-8以确保中文正确显示
+
+------------------------------------------------------------
+
+Version 1.1 - 2023/08/04
+
+New Features:
+- Added changelog.
+
+Improvements:
+- Some program output will now be highlighted.
+- The adb.exe will be checked and terminated before starting MAA to ensure MAA works correctly.
+
+Bug Fixes:
+- Fixed some link parameter association errors.
+
+Known Issues:
+- Real-time syntax highlighting not implemented.
+
+------------------------------------------------------------
+
+Version 1.0 - 2023/08/02
+
+Initial Release:
+- First version of the SuperLauncher application.
+- Basic features include launching applications from the command line.
