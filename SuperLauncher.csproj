@@ -47,6 +47,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Launcher Settings64.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
@@ -90,6 +93,10 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Changelog.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Launcher Settings.ico" />
+    <Content Include="Launcher Settings64.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
