@@ -95,7 +95,6 @@
     <EmbeddedResource Include="Changelog.txt" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Launcher Settings.ico" />
     <Content Include="Launcher Settings64.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
