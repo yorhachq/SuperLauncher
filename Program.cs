@@ -61,7 +61,7 @@ namespace SuperLauncher
                             case "launch":
                                 if (argsArr.Length < 2)
                                 {
-                                    HighLightMsgType(notProvideAppNameMessage,ConsoleColor.Red);
+                                    HighLightMsgType(notProvideAppNameMessage, ConsoleColor.Red);
                                 }
                                 else
                                 {
@@ -75,7 +75,7 @@ namespace SuperLauncher
                             case "update":
                                 if (argsArr.Length < 2)
                                 {
-                                    HighLightMsgType(notProvideAppNameMessage,ConsoleColor.Red);
+                                    HighLightMsgType(notProvideAppNameMessage, ConsoleColor.Red);
                                 }
                                 else
                                 {
@@ -95,7 +95,7 @@ namespace SuperLauncher
                             case "link":
                                 if (argsArr.Length < 2)
                                 {
-                                    HighLightMsgType(notProvideURLMessage,ConsoleColor.Red);
+                                    HighLightMsgType(notProvideURLMessage, ConsoleColor.Red);
                                 }
                                 else
                                 {
@@ -110,7 +110,7 @@ namespace SuperLauncher
                             case "ver":
                                 ShowVersion();
                                 break;
-                                
+
                             case "-c":
                             case "-cg":
                             case "--changelog":
@@ -158,7 +158,7 @@ namespace SuperLauncher
             }
             else
             {
-                HighLightMsgType("[Error] Configuration Loading Failed.\n",ConsoleColor.Red);
+                HighLightMsgType("[Error] Configuration Loading Failed.\n", ConsoleColor.Red);
             }
         }
 
@@ -185,7 +185,7 @@ namespace SuperLauncher
             string version = superLauncherMessages["Version"];
             //通过设置光标位置将版本号居中输出
             Console.SetCursorPosition((Console.WindowWidth - version.Length) / 2, Console.CursorTop);
-            HighLight(version+'\n', ConsoleColor.DarkYellow);
+            HighLight(version + '\n', ConsoleColor.DarkYellow);
 
             ShowWelcomePage();
         }
@@ -283,7 +283,7 @@ namespace SuperLauncher
                     {
                         "Arknights",
                         "MAA",
-                        //"GenshinImpact",
+                        /*"GenshinImpact",*/
                         "StarRail"
                     };
                     LaunchMultipleApplications(gamesLaunchList);
@@ -314,7 +314,7 @@ namespace SuperLauncher
 
                 default:
                     string appNotFoundMessage = superLauncherMessages["AppNotFoundMessage"];
-                    HighLightMsgType(appNotFoundMessage,ConsoleColor.Red);
+                    HighLightMsgType(appNotFoundMessage, ConsoleColor.Red);
                     break;
             }
         }
@@ -322,9 +322,9 @@ namespace SuperLauncher
         // 启动单个应用
         static void LaunchSingleApplication(string appName)
         {
-            // 明日方舟(通过BlueStacks)
             if (appName.Equals("Arknights"))
             {
+                // 明日方舟(通过BlueStacks)
                 string bluestacksPath = ConfigurationManager.AppSettings["BlueStacksPath"];
                 string bluestacksExe = "HD-Player.exe";
                 string instanceName = "Nougat32";
@@ -333,6 +333,7 @@ namespace SuperLauncher
 
                 string arguments = $"--instance {instanceName} --cmd {command} --package \"{package}\"";
 
+                bool isSuccess = true;
                 try
                 {
                     ProcessStartInfo startInfo = new ProcessStartInfo
@@ -350,12 +351,44 @@ namespace SuperLauncher
                         process.Start();
                     }
 
-                    HighLightMsgType("[Success] Arknights Is Running.\n",ConsoleColor.Green);
+                    HighLightMsgType("[Success] Arknights Is Running.\n", ConsoleColor.Green);
                 }
                 catch (Exception ex)
                 {
-                    HighLightMsgType("[Error] An Error Occurred During Startup (Arknights):" + ex.Message,ConsoleColor.Red);
-                    Console.WriteLine();
+                    HighLightMsgType("[Error] An Error Occurred During Startup (Arknights):" + ex.Message, ConsoleColor.Red);
+                    isSuccess = false;
+                }
+
+                // 明日方舟(通过MuMu)
+                if (!isSuccess)
+                {
+                    HighLightMsgType("[Info] Try Using MuMu Instead", ConsoleColor.Cyan);
+                    string mumuPath = ConfigurationManager.AppSettings["MuMuPath"];
+                    arguments = $"{mumuPath} -p {package} -v 0";
+
+                    try
+                    {
+                        ProcessStartInfo startInfo = new ProcessStartInfo
+                        {
+                            FileName = $"{mumuPath}",
+                            Arguments = arguments,
+                            UseShellExecute = false,
+                            RedirectStandardOutput = true,
+                            CreateNoWindow = true
+                        };
+
+                        using (Process process = new Process())
+                        {
+                            process.StartInfo = startInfo;
+                            process.Start();
+                        }
+
+                        HighLightMsgType("[Success] Arknights Is Running.\n", ConsoleColor.Green);
+                    }
+                    catch (Exception ex)
+                    {
+                        HighLightMsgType("[Error] An Error Occurred During Startup (Arknights):" + ex.Message, ConsoleColor.Red);
+                    }
                 }
             }
             else
@@ -397,11 +430,11 @@ namespace SuperLauncher
                                 try
                                 {
                                     process.Kill();
-                                    HighLightMsgType("[Info] The redundant adb.exe process is has been closed.",ConsoleColor.Cyan);
+                                    HighLightMsgType("[Info] The redundant adb.exe process is has been closed.", ConsoleColor.Cyan);
                                 }
                                 catch (Exception ex)
                                 {
-                                    HighLightMsgType($"[Error] An Error Occurred During Kill adb.exe:" + ex.Message,ConsoleColor.Red);
+                                    HighLightMsgType($"[Error] An Error Occurred During Kill adb.exe:" + ex.Message, ConsoleColor.Red);
                                     Console.WriteLine();
                                 }
                             }
@@ -430,7 +463,7 @@ namespace SuperLauncher
                         appName = "WeChat";
                     }
                     Process.Start(appPath);
-                    HighLightMsgType($"[Success] {appName} Is Running.\n",ConsoleColor.Green);
+                    HighLightMsgType($"[Success] {appName} Is Running.\n", ConsoleColor.Green);
                 }
                 catch (Exception ex)
                 {
@@ -671,7 +704,7 @@ namespace SuperLauncher
                     }
                 }
                 Process.Start(url);
-                HighLightMsgType($"[Success] {url} Is Open.\n",ConsoleColor.Green);
+                HighLightMsgType($"[Success] {url} Is Open.\n", ConsoleColor.Green);
             }
             catch (Exception ex)
             {
